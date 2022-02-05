@@ -7,7 +7,7 @@
 	"license": "MIT",
 	"scripts": {
 		"start": "webpack-dev-server --history-api-fallback --progress",
-		"test": "jest"
+		"test": "jest --watch"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.17.0",
