@@ -1,5 +1,5 @@
 import { it, expect } from '@jest/globals';
-import { createShip } from './createShip';
+import { createShip } from '../createShip';
 
 it('Should create ship with length 5', () => {
 	const ship = createShip({ size: 5 });
@@ -32,4 +32,13 @@ it('Should return false when not ship sunk', () => {
 	ship.hit(0);
 	ship.hit(1);
 	expect(ship.isSunk()).toBeFalsy();
+});
+
+it('Should create two distinct ships', () => {
+	const ship1 = createShip({ size: 5 });
+	const ship2 = createShip({ size: 2 });
+	ship1.hit(1);
+	ship2.hit(0);
+
+	expect(ship1).not.toEqual(ship2);
 });
