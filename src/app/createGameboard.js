@@ -39,7 +39,14 @@ const createGameboard = () => {
 		placement.isAttacked = true;
 		if (placement.ship) {
 			placement.ship.hit(placement.shipPosition);
+			return true;
 		}
+		return false;
+	}
+
+	function validateLegalAttack(xCoordinate, yCoordinate) {
+		const placement = board[xCoordinate][yCoordinate];
+		return !placement.isAttacked;
 	}
 
 	function areAllShipsSunk() {
@@ -58,6 +65,7 @@ const createGameboard = () => {
 		receiveAttack,
 		placeShip,
 		areAllShipsSunk,
+		validateLegalAttack,
 	};
 };
 
