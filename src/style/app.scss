@@ -1,5 +1,53 @@
-$primary-color: #2e878a;
+$navy-black: #08262c;
+$navy-blue: #003b4f;
+$teal-blue: #088199;
+$gray: #c6ccd0;
+$yellow: #e8b00f;
+$white: #ffffff;
+$red: #b30003;
+
+@font-face {
+	font-family: 'ITC Machine';
+	src: url('fonts/MachineStd.otf') format('opentype');
+	font-weight: normal;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'ITC Machine Bold';
+	src: url('fonts/MachineStd-Bold.otf') format('opentype');
+	font-weight: bold;
+	font-style: normal;
+}
 
 body {
-	color: $primary-color;
+	padding: 0;
+	margin: 0;
+	background-color: $navy-black;
+}
+
+header {
+	background-color: $navy-blue;
+	color: $gray;
+	display: flex;
+	justify-content: center;
+	border-bottom: $yellow 1px solid;
+	box-shadow: 0 0 10px $teal-blue;
+}
+
+h1 {
+	padding: 10px;
+	margin: 0;
+	font: 3em 'ITC Machine', monospace;
+}
+
+.game-container {
+	width: 90%;
+}
+
+.game-board {
+	width: 500px;
+	height: 500px;
+	display: grid;
+	grid-template-columns: repeat(11, 1fr);
+	grid-template-rows: repeat(11, 1fr);
 }
