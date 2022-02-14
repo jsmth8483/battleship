@@ -6,7 +6,7 @@ import { Player, ComputerPlayer } from '../player';
 it('Should be able to attack a player and miss', () => {
 	const gameboard = createGameboard();
 	const ship = createShip({ size: 3 });
-	gameboard.placeShip(ship, 2, 4, 'top-down');
+	gameboard.placeShip(ship, 2, 4, 0);
 
 	expect(Player.attack(1, 2, gameboard)).toBe(false);
 });
@@ -14,7 +14,7 @@ it('Should be able to attack a player and miss', () => {
 it('Should be able to attack a player and hit', () => {
 	const gameboard = createGameboard();
 	const ship = createShip({ size: 3 });
-	gameboard.placeShip(ship, 2, 4, 'top-down');
+	gameboard.placeShip(ship, 2, 4, 0);
 
 	expect(Player.attack(2, 4, gameboard)).toBe(true);
 });

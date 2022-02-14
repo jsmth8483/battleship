@@ -11,7 +11,7 @@ it('Should place ship at specific coordinates (vertically)', () => {
 	const gameboard = createGameboard();
 	const ship = createShip({ size: 3 });
 
-	gameboard.placeShip(ship, 2, 4, 'top-down');
+	gameboard.placeShip(ship, 2, 4, 0);
 
 	expect(gameboard.getGameboard()[2][4]).toEqual({
 		isAttacked: false,
@@ -34,7 +34,7 @@ it('Should place ship at specific coordinates (vertically)', () => {
 	const gameboard = createGameboard();
 	const ship = createShip({ size: 3 });
 
-	gameboard.placeShip(ship, 2, 4, 'top-down');
+	gameboard.placeShip(ship, 2, 4, 0);
 
 	expect(gameboard.getGameboard()[2][4]).toEqual({
 		isAttacked: false,
@@ -57,7 +57,7 @@ it('Should place ship at specific coordinates (horizontally)', () => {
 	const gameboard = createGameboard();
 	const ship = createShip({ size: 3 });
 
-	gameboard.placeShip(ship, 2, 4, 'left-right');
+	gameboard.placeShip(ship, 2, 4, 1);
 
 	expect(gameboard.getGameboard()[2][4]).toEqual({
 		isAttacked: false,
@@ -80,16 +80,16 @@ it('Should throw error when invalid ship orientation given', () => {
 	const gameboard = createGameboard();
 	const ship = createShip({ size: 3 });
 
-	expect(() => gameboard.placeShip(ship, 2, 4, '')).toThrow(Error);
+	expect(() => gameboard.placeShip(ship, 2, 4, 2)).toThrow(Error);
 });
 
 it('Should throw error when ship placed in populated coordinates', () => {
 	const gameboard = createGameboard();
 	const ship1 = createShip({ size: 3 });
 	const ship2 = createShip({ size: 3 });
-	gameboard.placeShip(ship1, 2, 4, 'left-right');
+	gameboard.placeShip(ship1, 2, 4, 1);
 
-	expect(() => gameboard.placeShip(ship2, 3, 4, 'top-down')).toThrow(Error);
+	expect(() => gameboard.placeShip(ship2, 3, 4, 0)).toThrow(Error);
 });
 
 it('Should set empty coordinates on gameboard attacked', () => {
@@ -105,7 +105,7 @@ it('Should set empty coordinates on gameboard attacked', () => {
 it('Should set populated coordinates on gameboard attacked', () => {
 	const gameboard = createGameboard();
 	const ship = createShip({ size: 3 });
-	gameboard.placeShip(ship, 2, 4, 'top-down');
+	gameboard.placeShip(ship, 2, 4, 0);
 	gameboard.receiveAttack(2, 4);
 
 	expect(gameboard.getGameboard()[2][4]).toEqual({
@@ -120,10 +120,10 @@ it('Should set populated coordinates on gameboard attacked', () => {
 it('Should return false if not all ships sunk', () => {
 	const gameboard = createGameboard();
 	const ship1 = createShip({ size: 3 });
-	gameboard.placeShip(ship1, 2, 4, 'top-down');
+	gameboard.placeShip(ship1, 2, 4, 0);
 
 	const ship2 = createShip({ size: 2 });
-	gameboard.placeShip(ship2, 6, 6, 'left-right');
+	gameboard.placeShip(ship2, 6, 6, 1);
 	gameboard.receiveAttack(7, 6);
 	gameboard.receiveAttack(6, 6);
 
@@ -134,7 +134,7 @@ it('Should return true if all ships sunk', () => {
 	const gameboard = createGameboard();
 
 	const ship2 = createShip({ size: 2 });
-	gameboard.placeShip(ship2, 6, 6, 'left-right');
+	gameboard.placeShip(ship2, 6, 6, 1);
 	gameboard.receiveAttack(7, 6);
 	gameboard.receiveAttack(6, 6);
 

@@ -23,6 +23,7 @@ body {
 	padding: 0;
 	margin: 0;
 	background-color: $navy-black;
+	height: 100vh;
 }
 
 header {
@@ -32,22 +33,106 @@ header {
 	justify-content: center;
 	border-bottom: $yellow 1px solid;
 	box-shadow: 0 0 10px $teal-blue;
+
+	h1 {
+		padding: 10px;
+		margin: 0;
+		font: 3em 'ITC Machine', monospace;
+	}
 }
 
-h1 {
-	padding: 10px;
-	margin: 0;
-	font: 3em 'ITC Machine', monospace;
-}
-
-.game-container {
+#game-container {
 	width: 90%;
-}
+	margin: 10px auto;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-evenly;
 
-.game-board {
-	width: 500px;
-	height: 500px;
-	display: grid;
-	grid-template-columns: repeat(11, 1fr);
-	grid-template-rows: repeat(11, 1fr);
+	.board-container {
+		display: flex;
+		flex-direction: column-reverse;
+		align-items: center;
+		h2 {
+			color: $yellow;
+			width: fit-content;
+		}
+	}
+
+	.game-board {
+		width: 500px;
+		height: 500px;
+		display: grid;
+		grid-template-columns: repeat(11, 1fr);
+		grid-template-rows: repeat(11, 1fr);
+		grid-template-areas:
+			'. column column column column column column column column column column'
+			'row board board board board board board board board board board'
+			'row board board board board board board board board board board'
+			'row board board board board board board board board board board'
+			'row board board board board board board board board board board'
+			'row board board board board board board board board board board'
+			'row board board board board board board board board board board'
+			'row board board board board board board board board board board'
+			'row board board board board board board board board board board'
+			'row board board board board board board board board board board'
+			'row board board board board board board board board board board';
+		color: $white;
+		justify-items: center;
+		align-items: center;
+
+		.game-board-column-indicator {
+			//grid-area: column;
+		}
+		.game-board-row-indicator {
+			//grid-area: row;
+		}
+
+		.game-board-placeable {
+			grid-area: board;
+			display: grid;
+			grid-template-columns: repeat(10, 1fr);
+			grid-template-rows: repeat(10, 1fr);
+			justify-items: center;
+			align-items: center;
+			width: 100%;
+			height: 100%;
+			grid-gap: 1px;
+
+			.game-board-square-placeable {
+				background-color: $teal-blue;
+				width: 100%;
+				height: 100%;
+			}
+
+			.populated {
+				background-color: $yellow;
+			}
+
+			.attacked {
+				position: relative;
+				display: flex;
+				align-items: center;
+			}
+			.attacked::after,
+			.attacked::before {
+				position: absolute;
+				content: '';
+				width: 100%;
+				height: 4px;
+				background-color: $red;
+			}
+
+			.attacked::before {
+				transform: rotate(45deg);
+			}
+			.attacked::after {
+				transform: rotate(-45deg);
+			}
+
+			.miss::after,
+			.miss::before {
+				background-color: $gray;
+			}
+		}
+	}
 }

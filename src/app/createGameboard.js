@@ -9,7 +9,7 @@ const createGameboard = () => {
 		);
 
 	function placeShip(ship, xStart, yStart, orientation) {
-		if (orientation === 'top-down') {
+		if (orientation === 0) {
 			for (let i = 0; i < ship.getPositions().length; i++) {
 				if (board[xStart][yStart + i].ship)
 					throw Error('Ship cannot be placed');
@@ -19,7 +19,7 @@ const createGameboard = () => {
 				board[xStart][yStart + i].shipPosition = i;
 			}
 			placedShips.push(ship);
-		} else if (orientation === 'left-right') {
+		} else if (orientation === 1) {
 			for (let i = 0; i < ship.getPositions().length; i++) {
 				if (board[xStart + i][yStart].ship)
 					throw Error('Ship cannot be placed');
