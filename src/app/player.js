@@ -2,6 +2,9 @@ const Player = {
 	attack(xCoordinate, yCoordinate, gameboard) {
 		return gameboard.receiveAttack(xCoordinate, yCoordinate);
 	},
+	setGameboard(board) {
+		this.gameboard = board;
+	},
 };
 
 const randomAttackMixin = {

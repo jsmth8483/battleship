@@ -4,7 +4,7 @@ import { createShip } from '../createShip';
 
 it('Should create game board', () => {
 	const gameboard = createGameboard();
-	expect(gameboard.getGameboard()).toBeDefined();
+	expect(gameboard.getState()).toBeDefined();
 });
 
 it('Should place ship at specific coordinates (vertically)', () => {
@@ -13,17 +13,17 @@ it('Should place ship at specific coordinates (vertically)', () => {
 
 	gameboard.placeShip(ship, 2, 4, 0);
 
-	expect(gameboard.getGameboard()[2][4]).toEqual({
+	expect(gameboard.getState()[2][4]).toEqual({
 		isAttacked: false,
 		ship: ship,
 		shipPosition: 0,
 	});
-	expect(gameboard.getGameboard()[2][5]).toEqual({
+	expect(gameboard.getState()[2][5]).toEqual({
 		isAttacked: false,
 		ship: ship,
 		shipPosition: 1,
 	});
-	expect(gameboard.getGameboard()[2][6]).toEqual({
+	expect(gameboard.getState()[2][6]).toEqual({
 		isAttacked: false,
 		ship: ship,
 		shipPosition: 2,
@@ -36,17 +36,17 @@ it('Should place ship at specific coordinates (vertically)', () => {
 
 	gameboard.placeShip(ship, 2, 4, 0);
 
-	expect(gameboard.getGameboard()[2][4]).toEqual({
+	expect(gameboard.getState()[2][4]).toEqual({
 		isAttacked: false,
 		ship: ship,
 		shipPosition: 0,
 	});
-	expect(gameboard.getGameboard()[2][5]).toEqual({
+	expect(gameboard.getState()[2][5]).toEqual({
 		isAttacked: false,
 		ship: ship,
 		shipPosition: 1,
 	});
-	expect(gameboard.getGameboard()[2][6]).toEqual({
+	expect(gameboard.getState()[2][6]).toEqual({
 		isAttacked: false,
 		ship: ship,
 		shipPosition: 2,
@@ -59,17 +59,17 @@ it('Should place ship at specific coordinates (horizontally)', () => {
 
 	gameboard.placeShip(ship, 2, 4, 1);
 
-	expect(gameboard.getGameboard()[2][4]).toEqual({
+	expect(gameboard.getState()[2][4]).toEqual({
 		isAttacked: false,
 		ship: ship,
 		shipPosition: 0,
 	});
-	expect(gameboard.getGameboard()[3][4]).toEqual({
+	expect(gameboard.getState()[3][4]).toEqual({
 		isAttacked: false,
 		ship: ship,
 		shipPosition: 1,
 	});
-	expect(gameboard.getGameboard()[4][4]).toEqual({
+	expect(gameboard.getState()[4][4]).toEqual({
 		isAttacked: false,
 		ship: ship,
 		shipPosition: 2,
@@ -95,7 +95,7 @@ it('Should throw error when ship placed in populated coordinates', () => {
 it('Should set empty coordinates on gameboard attacked', () => {
 	const gameboard = createGameboard();
 	gameboard.receiveAttack(2, 3);
-	expect(gameboard.getGameboard()[2][3]).toEqual({
+	expect(gameboard.getState()[2][3]).toEqual({
 		isAttacked: true,
 		ship: null,
 		shipPosition: null,
@@ -108,13 +108,13 @@ it('Should set populated coordinates on gameboard attacked', () => {
 	gameboard.placeShip(ship, 2, 4, 0);
 	gameboard.receiveAttack(2, 4);
 
-	expect(gameboard.getGameboard()[2][4]).toEqual({
+	expect(gameboard.getState()[2][4]).toEqual({
 		isAttacked: true,
 		ship: ship,
 		shipPosition: 0,
 	});
 
-	expect(gameboard.getGameboard()[2][4].ship.getPositions()[0] === 'hit');
+	expect(gameboard.getState()[2][4].ship.getPositions()[0] === 'hit');
 });
 
 it('Should return false if not all ships sunk', () => {
@@ -133,10 +133,12 @@ it('Should return false if not all ships sunk', () => {
 it('Should return true if all ships sunk', () => {
 	const gameboard = createGameboard();
 
-	const ship2 = createShip({ size: 2 });
+	const ship2 = createShip({ size: 3 });
 	gameboard.placeShip(ship2, 6, 6, 1);
 	gameboard.receiveAttack(7, 6);
 	gameboard.receiveAttack(6, 6);
+	gameboard.receiveAttack(8, 6);
+	gameboard.receiveAttack(1, 6);
 
 	expect(gameboard.areAllShipsSunk()).toBeTruthy();
 });

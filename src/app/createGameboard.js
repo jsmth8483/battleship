@@ -57,11 +57,11 @@ const createGameboard = () => {
 		return true;
 	}
 
-	function getGameboard() {
+	function getState() {
 		return board;
 	}
 	return {
-		getGameboard,
+		getState,
 		receiveAttack,
 		placeShip,
 		areAllShipsSunk,

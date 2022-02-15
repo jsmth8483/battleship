@@ -4,7 +4,6 @@ function renderNewGame() {
 		renderColumnHeader(board);
 		renderRowHeader(board);
 		renderMainBoard(board);
-		//renderPlaceableSquares(board);
 	});
 
 	function renderColumnHeader(board) {
@@ -47,7 +46,10 @@ function renderNewGame() {
 	}
 }
 
-function renderGameState() {}
+function renderGameState(playerState, computerState) {
+	renderPlayerState(playerState);
+	renderComputerState(computerState);
+}
 
 function renderPlayerState(playerState) {
 	const playerBoard = document.querySelector('#player-board');
@@ -61,9 +63,9 @@ function renderPlayerState(playerState) {
 			}
 			if (position.isAttacked) {
 				square.classList.add('attacked');
-			}
-			if (position.isAttacked && !position.ship) {
-				square.classList.add('miss');
+				if (!position.ship) {
+					square.classList.add('miss');
+				}
 			}
 		});
 	});
@@ -76,14 +78,22 @@ function renderComputerState(computerState) {
 			const square = computerBoard.querySelector(
 				`[data-x='${xIndex}'][data-y='${yIndex}']`
 			);
+			if (position.ship) {
+				square.classList.add('populated');
+			}
 			if (position.isAttacked) {
 				square.classList.add('attacked');
-			}
-			if (!position.ship) {
-				square.classList.add('miss');
+				if (!position.ship) {
+					square.classList.add('miss');
+				}
 			}
 		});
 	});
 }
 
-export { renderNewGame, renderPlayerState, renderComputerState };
+export {
+	renderNewGame,
+	renderGameState,
+	renderPlayerState,
+	renderComputerState,
+};

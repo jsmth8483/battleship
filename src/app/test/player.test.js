@@ -22,7 +22,7 @@ it('Should be able to attack a player and hit', () => {
 it('Should be able to randomly attack', () => {
 	const gameboard = createGameboard();
 	ComputerPlayer.randomAttack(gameboard);
-	expect(gameboard.getGameboard()).toEqual(
+	expect(gameboard.getState()).toEqual(
 		expect.arrayContaining([
 			expect.arrayContaining([
 				expect.objectContaining({
