@@ -1,9 +1,10 @@
 import { createGameboard } from './createGameboard';
 import { Player, ComputerPlayer as Computer } from './player';
-import { renderNewGame, renderGameState } from './renderGame';
+import { renderNewGame, renderGameState, disableBoards } from './renderGame';
 import { createShip } from './createShip';
+import { displayWinner } from './alerts';
 
-function Game() {
+const Game = (function () {
 	Player.setGameboard(createGameboard());
 	Computer.setGameboard(createGameboard());
 
@@ -77,6 +78,8 @@ function Game() {
 
 			if (winner) {
 				unregisterBoardClickListener();
+				displayWinner(winner == Player ? 'Player' : 'Computer');
+				disableBoards();
 			}
 		}
 
@@ -95,6 +98,6 @@ function Game() {
 	}
 
 	return { run };
-}
+})();
 
 export { Game };

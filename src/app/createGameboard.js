@@ -17,6 +17,7 @@ const createGameboard = () => {
 			for (let i = 0; i < ship.getPositions().length; i++) {
 				board[xStart][yStart + i].ship = ship;
 				board[xStart][yStart + i].shipPosition = i;
+				board[xStart][yStart + i].orientation = orientation;
 			}
 			placedShips.push(ship);
 		} else if (orientation === 1) {
@@ -27,6 +28,7 @@ const createGameboard = () => {
 			for (let i = 0; i < ship.getPositions().length; i++) {
 				board[xStart + i][yStart].ship = ship;
 				board[xStart + i][yStart].shipPosition = i;
+				board[xStart + i][yStart].orientation = orientation;
 			}
 			placedShips.push(ship);
 		} else {
@@ -75,4 +77,5 @@ const shipPlacement = () => ({
 	isAttacked: false,
 	ship: null,
 	shipPosition: null,
+	orientation: 0,
 });

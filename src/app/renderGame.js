@@ -58,8 +58,12 @@ function renderPlayerState(playerState) {
 			const square = playerBoard.querySelector(
 				`[data-x='${xIndex}'][data-y='${yIndex}']`
 			);
+
 			if (position.ship) {
+				const div = document.createElement('div');
+				div.draggable = true;
 				square.classList.add('populated');
+				square.appendChild(div);
 			}
 			if (position.isAttacked) {
 				square.classList.add('attacked');
@@ -91,9 +95,21 @@ function renderComputerState(computerState) {
 	});
 }
 
+function disableBoards() {
+	const placeableBoard = document.querySelectorAll(
+		'.game-board-square-placeable'
+	);
+
+	placeableBoard.forEach((square) => {
+		square.classList.add('square-disabled');
+	});
+	renderGameState(Player.gameboard.getState(), Computer.gameboard.getState());
+}
+
 export {
 	renderNewGame,
 	renderGameState,
 	renderPlayerState,
 	renderComputerState,
+	disableBoards,
 };

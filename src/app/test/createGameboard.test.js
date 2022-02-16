@@ -17,16 +17,19 @@ it('Should place ship at specific coordinates (vertically)', () => {
 		isAttacked: false,
 		ship: ship,
 		shipPosition: 0,
+		orientation: 0,
 	});
 	expect(gameboard.getState()[2][5]).toEqual({
 		isAttacked: false,
 		ship: ship,
 		shipPosition: 1,
+		orientation: 0,
 	});
 	expect(gameboard.getState()[2][6]).toEqual({
 		isAttacked: false,
 		ship: ship,
 		shipPosition: 2,
+		orientation: 0,
 	});
 });
 
@@ -40,16 +43,19 @@ it('Should place ship at specific coordinates (vertically)', () => {
 		isAttacked: false,
 		ship: ship,
 		shipPosition: 0,
+		orientation: 0,
 	});
 	expect(gameboard.getState()[2][5]).toEqual({
 		isAttacked: false,
 		ship: ship,
 		shipPosition: 1,
+		orientation: 0,
 	});
 	expect(gameboard.getState()[2][6]).toEqual({
 		isAttacked: false,
 		ship: ship,
 		shipPosition: 2,
+		orientation: 0,
 	});
 });
 
@@ -63,16 +69,19 @@ it('Should place ship at specific coordinates (horizontally)', () => {
 		isAttacked: false,
 		ship: ship,
 		shipPosition: 0,
+		orientation: 1,
 	});
 	expect(gameboard.getState()[3][4]).toEqual({
 		isAttacked: false,
 		ship: ship,
 		shipPosition: 1,
+		orientation: 1,
 	});
 	expect(gameboard.getState()[4][4]).toEqual({
 		isAttacked: false,
 		ship: ship,
 		shipPosition: 2,
+		orientation: 1,
 	});
 });
 
@@ -99,6 +108,7 @@ it('Should set empty coordinates on gameboard attacked', () => {
 		isAttacked: true,
 		ship: null,
 		shipPosition: null,
+		orientation: 0,
 	});
 });
 
@@ -112,6 +122,7 @@ it('Should set populated coordinates on gameboard attacked', () => {
 		isAttacked: true,
 		ship: ship,
 		shipPosition: 0,
+		orientation: 0,
 	});
 
 	expect(gameboard.getState()[2][4].ship.getPositions()[0] === 'hit');

@@ -41,6 +41,19 @@ header {
 	}
 }
 
+#alerts {
+	margin: 10px;
+	height: 75px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	font-size: 24px;
+
+	.alert-winner {
+		color: $yellow;
+	}
+}
+
 #game-container {
 	width: 90%;
 	margin: 10px auto;
@@ -133,6 +146,51 @@ header {
 			.miss::before {
 				background-color: $gray;
 			}
+
+			.square-disabled {
+				opacity: 70%;
+			}
+
+			.game-board-square-placeable div {
+				width: 100%;
+				height: 100%;
+			}
 		}
 	}
+}
+
+#shipyard {
+	width: 90%;
+	display: flex;
+	align-items: center;
+	margin: 20px auto;
+	padding: 20px;
+	background-color: $teal-blue;
+	justify-content: space-around;
+	flex-wrap: wrap;
+
+	.ship {
+		display: grid;
+		grid-gap: 1px;
+		grid-template-columns: 44.5px;
+		grid-auto-columns: 44.5px;
+		flex-basis: 0;
+		margin: 20px;
+
+		div {
+			background-color: $yellow;
+			width: 44.5px;
+			height: 44.5px;
+		}
+	}
+	.horizontal {
+		display: grid;
+		grid-template-areas: 'ship ship ship ship ship';
+		grid-template-columns: 44.5px;
+		grid-auto-columns: 44.5px;
+	}
+
+	// .vertical {
+	// 	grid-auto-rows: 44.5px;
+	// }
 }
