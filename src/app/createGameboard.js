@@ -8,27 +8,27 @@ const createGameboard = () => {
 				.map((x) => shipPlacement())
 		);
 
-	function placeShip(ship, xStart, yStart, orientation) {
+	function placeShip(ship, yStart, xStart, orientation) {
 		if (orientation === 0) {
 			for (let i = 0; i < ship.getPositions().length; i++) {
-				if (board[xStart][yStart + i].ship)
+				if (board[yStart][xStart + i].ship)
 					throw Error('Ship cannot be placed');
 			}
 			for (let i = 0; i < ship.getPositions().length; i++) {
-				board[xStart][yStart + i].ship = ship;
-				board[xStart][yStart + i].shipPosition = i;
-				board[xStart][yStart + i].orientation = orientation;
+				board[yStart][xStart + i].ship = ship;
+				board[yStart][xStart + i].shipPosition = i;
+				board[yStart][xStart + i].orientation = orientation;
 			}
 			placedShips.push(ship);
 		} else if (orientation === 1) {
 			for (let i = 0; i < ship.getPositions().length; i++) {
-				if (board[xStart + i][yStart].ship)
+				if (board[yStart + i][xStart].ship)
 					throw Error('Ship cannot be placed');
 			}
 			for (let i = 0; i < ship.getPositions().length; i++) {
-				board[xStart + i][yStart].ship = ship;
-				board[xStart + i][yStart].shipPosition = i;
-				board[xStart + i][yStart].orientation = orientation;
+				board[yStart + i][xStart].ship = ship;
+				board[yStart + i][xStart].shipPosition = i;
+				board[yStart + i][xStart].orientation = orientation;
 			}
 			placedShips.push(ship);
 		} else {

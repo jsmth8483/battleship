@@ -8,24 +8,24 @@ const Game = (function () {
 	Player.setGameboard(createGameboard());
 	Computer.setGameboard(createGameboard());
 
-	const aircraftCarrier = createShip({ size: 5 });
-	const destroyer1 = createShip({ size: 3 });
-	const destroyer2 = createShip({ size: 4 });
+	// const aircraftCarrier = createShip({ size: 5 });
+	// const destroyer1 = createShip({ size: 3 });
+	// const destroyer2 = createShip({ size: 4 });
 
-	Player.gameboard.placeShip(aircraftCarrier, 0, 0, 1);
-	Player.gameboard.placeShip(destroyer1, 4, 5, 0);
-	Player.gameboard.placeShip(destroyer2, 6, 7, 1);
+	// Player.gameboard.placeShip(aircraftCarrier, 0, 0, 1);
+	// Player.gameboard.placeShip(destroyer1, 4, 5, 0);
+	// Player.gameboard.placeShip(destroyer2, 6, 7, 1);
 
-	const destroyer = createShip({ size: 3 });
+	// const destroyer = createShip({ size: 3 });
 
-	Computer.gameboard.placeShip(destroyer, 4, 7, 0);
+	// Computer.gameboard.placeShip(destroyer, 4, 7, 0);
 
-	Computer.attack(0, 0, Player.gameboard);
-	Computer.attack(2, 0, Player.gameboard);
-	Computer.attack(3, 3, Player.gameboard);
-	Player.attack(0, 0, Computer.gameboard);
-	Player.attack(2, 0, Computer.gameboard);
-	Player.attack(4, 7, Computer.gameboard);
+	// Computer.attack(0, 0, Player.gameboard);
+	// Computer.attack(2, 0, Player.gameboard);
+	// Computer.attack(3, 3, Player.gameboard);
+	// Player.attack(0, 0, Computer.gameboard);
+	// Player.attack(2, 0, Computer.gameboard);
+	// Player.attack(4, 7, Computer.gameboard);
 
 	let winner;
 

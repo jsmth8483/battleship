@@ -184,13 +184,6 @@ header {
 		}
 	}
 	.horizontal {
-		display: grid;
-		grid-template-areas: 'ship ship ship ship ship';
-		grid-template-columns: 44.5px;
-		grid-auto-columns: 44.5px;
+		grid-auto-flow: column;
 	}
-
-	// .vertical {
-	// 	grid-auto-rows: 44.5px;
-	// }
 }
