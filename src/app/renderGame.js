@@ -1,3 +1,4 @@
+import { shipyard } from './shipyard';
 function renderNewGame() {
 	const gameboards = document.querySelectorAll('.game-board');
 	gameboards.forEach((board) => {
@@ -41,9 +42,27 @@ function renderNewGame() {
 			square.classList.add('game-board-square', 'game-board-square-placeable');
 			square.dataset.x = i % 10;
 			square.dataset.y = Math.trunc(i / 10);
+			square.addEventListener('drop', handleShipDrop);
+			square.addEventListener('dragover', handleShipDragOver);
+			square.addEventListener('dragenter', handleShipDragEnter);
 			board.appendChild(square);
 		}
 	}
+}
+
+function handleShipDrop(e) {
+	e.preventDefault();
+	console.log(shipyard);
+}
+
+function handleShipDragOver(e) {
+	e.preventDefault();
+	console.log(shipyard.activeShip);
+}
+
+function handleShipDragEnter(e) {
+	e.preventDefault();
+	console.log(shipyard.activeShip);
 }
 
 function renderGameState(playerState, computerState) {
