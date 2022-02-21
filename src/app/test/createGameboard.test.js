@@ -153,3 +153,23 @@ it('Should return true if all ships sunk', () => {
 
 	expect(gameboard.areAllShipsSunk()).toBeTruthy();
 });
+
+it('Should remove ship', () => {
+	const gameboard = createGameboard();
+	const ship1 = createShip({ size: 3 });
+	gameboard.placeShip(ship1, 2, 4, 0);
+
+	const ship2 = createShip({ size: 2 });
+	gameboard.placeShip(ship2, 6, 6, 1);
+
+	gameboard.removeShip(ship1);
+	console.log(gameboard.getState());
+	expect(gameboard.areAllShipsSunk()).toBeFalsy();
+	expect(gameboard.getState()[2][4].ship).toBeNull();
+	expect(gameboard.getState()[2][5].ship).toBeNull();
+	expect(gameboard.getState()[2][6].ship).toBeNull();
+	expect(gameboard.getState()[6][6].ship).toBeDefined();
+	expect(gameboard.getState()[7][6].ship).toBeDefined();
+	expect(gameboard.getState()[8][6].ship).toBeDefined();
+	console.log(gameboard.getState());
+});

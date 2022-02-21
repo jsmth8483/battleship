@@ -1,3 +1,4 @@
+import { isEqual } from 'lodash';
 const createGameboard = () => {
 	const placedShips = [];
 	const board = Array(10)
@@ -36,6 +37,18 @@ const createGameboard = () => {
 		}
 	}
 
+	function removeShip(ship) {
+		board.forEach((arr, yIndex) => {
+			arr.forEach((position, xIndex) => {
+				if (isEqual(position.ship, ship)) {
+					console.log(yIndex, xIndex);
+					console.log(board[yIndex][xIndex]);
+					board[yIndex][xIndex] = shipPlacement();
+				}
+			});
+		});
+	}
+
 	function receiveAttack(xCoordinate, yCoordinate) {
 		const placement = board[xCoordinate][yCoordinate];
 		placement.isAttacked = true;
@@ -68,6 +81,7 @@ const createGameboard = () => {
 		placeShip,
 		areAllShipsSunk,
 		validateLegalAttack,
+		removeShip,
 	};
 };
 

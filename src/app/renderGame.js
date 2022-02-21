@@ -64,6 +64,9 @@ function renderPlayerState(playerState) {
 				div.draggable = true;
 				square.classList.add('populated');
 				square.appendChild(div);
+			} else {
+				square.childNodes.forEach((node) => square.removeChild(node));
+				square.classList.remove('populated');
 			}
 			if (position.isAttacked) {
 				square.classList.add('attacked');

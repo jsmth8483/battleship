@@ -6,6 +6,21 @@ const shipyard = (function () {
 	let activeShip = null;
 	let grabbedIndex = null;
 
+	function renderShipInShipyard(size) {
+		console.log(size);
+		const shipyard = document.querySelector('#shipyard');
+		const ship = document.createElement('div');
+		ship.draggable = true;
+		ship.className = 'ship';
+		for (let i = 0; i < size; i++) {
+			const shipSegment = document.createElement('div');
+			shipSegment.dataset.index = i;
+			ship.appendChild(shipSegment);
+		}
+		shipyard.appendChild(ship);
+		// TODO: Register listeners
+	}
+
 	function registerDragListeners() {
 		const ships = document.querySelectorAll('#shipyard .ship');
 		console.log(ships);
@@ -53,7 +68,23 @@ const shipyard = (function () {
 			square.addEventListener('drop', handleShipDrop);
 			square.addEventListener('dragover', handleShipDragOver);
 			square.addEventListener('dragenter', handleShipDragEnter);
+			square.addEventListener('click', handleSquareClick);
 		});
+	}
+
+	function handleSquareClick(e) {
+		if (e.target.parentNode.classList.contains('populated')) {
+			const shipToRemove =
+				Player.gameboard.getState()[e.target.parentNode.dataset.y][
+					e.target.parentNode.dataset.x
+				].ship;
+
+			console.log(Player.gameboard.getState());
+			Player.gameboard.removeShip(shipToRemove);
+			console.log(Player.gameboard.getState());
+			renderPlayerState(Player.gameboard.getState());
+			renderShipInShipyard(shipToRemove.getPositions().length);
+		}
 	}
 
 	function handleShipDrop(e) {
