@@ -1,3 +1,5 @@
+import { Player, ComputerPlayer as Computer } from './player';
+
 function renderNewGame() {
 	const gameboards = document.querySelectorAll('.game-board');
 	gameboards.forEach((board) => {
@@ -61,7 +63,6 @@ function renderPlayerState(playerState) {
 
 			if (position.ship) {
 				const div = document.createElement('div');
-				div.draggable = true;
 				square.classList.add('populated');
 				square.appendChild(div);
 			} else {
@@ -85,9 +86,6 @@ function renderComputerState(computerState) {
 			const square = computerBoard.querySelector(
 				`[data-x='${xIndex}'][data-y='${yIndex}']`
 			);
-			if (position.ship) {
-				square.classList.add('populated');
-			}
 			if (position.isAttacked) {
 				square.classList.add('attacked');
 				if (!position.ship) {

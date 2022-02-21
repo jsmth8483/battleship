@@ -30,9 +30,37 @@ const Game = (function () {
 	let winner;
 
 	function run() {
-		renderNewGame();
 		registerBoardClickListeners();
 		renderGameState(Player.gameboard.getState(), Computer.gameboard.getState());
+		placeRandomComputerShips();
+	}
+
+	function placeRandomComputerShips() {
+		const shipsToPlace = [
+			createShip({ size: 5 }),
+			createShip({ size: 4 }),
+			createShip({ size: 3 }),
+			createShip({ size: 3 }),
+			createShip({ size: 2 }),
+		];
+
+		shipsToPlace.forEach((ship) => {
+			let shipPlacedSuccessfully = false;
+			while (!shipPlacedSuccessfully) {
+				const randomOrientation = Math.floor(Math.random() * 2);
+				const randomX = Math.trunc(Math.random() * 10);
+				const randomY = Math.trunc(Math.random() * 10);
+				console.log(randomOrientation, randomX, randomY);
+				try {
+					shipPlacedSuccessfully = Computer.gameboard.placeShip(
+						ship,
+						randomY,
+						randomX,
+						randomOrientation
+					);
+				} catch (err) {}
+			}
+		});
 	}
 
 	function registerBoardClickListeners() {
@@ -97,7 +125,7 @@ const Game = (function () {
 		}
 	}
 
-	return { run };
+	return { run, renderNewGame };
 })();
 
 export { Game };

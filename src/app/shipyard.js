@@ -1,6 +1,7 @@
 import { createShip } from './createShip';
 import { Player } from './player';
 import { renderPlayerState } from './renderGame';
+import { Game } from './game';
 
 const shipyard = (function () {
 	let activeShip = null;
@@ -18,45 +19,44 @@ const shipyard = (function () {
 			ship.appendChild(shipSegment);
 		}
 		shipyard.appendChild(ship);
-		// TODO: Register listeners
+		registerDragListener(ship);
+	}
+
+	function registerDragListener(element) {
+		element.addEventListener('dragstart', handleShipDragStart, true);
+		element.addEventListener('dragend', handleShipDragEnd);
+		const children = [...element.children];
+		children.forEach((index) => {
+			index.addEventListener('mousedown', handleShipIndexMouseDown, true);
+			index.addEventListener('click', handleShipClick, true);
+		});
 	}
 
 	function registerDragListeners() {
 		const ships = document.querySelectorAll('#shipyard .ship');
-		console.log(ships);
 		ships.forEach((ship) => {
-			ship.addEventListener('dragstart', handleShipDragStart, true);
-			ship.addEventListener('dragend', handleShipDragEnd);
-			console.log(ship.children);
-			const children = [...ship.children];
-			children.forEach((index) => {
-				console.log(index);
-				index.addEventListener('mousedown', handleShipIndexMouseDown, true);
-				index.addEventListener('click', handleShipClick, true);
-			});
+			registerDragListener(ship);
 		});
+	}
 
-		function handleShipDragStart(e) {
-			activeShip = e.target;
-		}
+	function handleShipDragStart(e) {
+		activeShip = e.target;
+	}
 
-		function handleShipIndexMouseDown(e) {
-			console.log(e.target);
-			grabbedIndex = e.target.dataset.index;
-		}
+	function handleShipIndexMouseDown(e) {
+		grabbedIndex = e.target.dataset.index;
+	}
 
-		function handleShipClick(e) {
-			if (e.target.parentNode.classList.contains('horizontal')) {
-				e.target.parentNode.classList.remove('horizontal');
-			} else {
-				e.target.parentNode.classList.add('horizontal');
-			}
-			console.log(e.target.parentNode);
+	function handleShipClick(e) {
+		if (e.target.parentNode.classList.contains('horizontal')) {
+			e.target.parentNode.classList.remove('horizontal');
+		} else {
+			e.target.parentNode.classList.add('horizontal');
 		}
+	}
 
-		function handleShipDragEnd(e) {
-			activeShip = null;
-		}
+	function handleShipDragEnd(e) {
+		activeShip = null;
 	}
 
 	function registerDropListeners() {
@@ -67,8 +67,19 @@ const shipyard = (function () {
 		playerSquares.forEach((square) => {
 			square.addEventListener('drop', handleShipDrop);
 			square.addEventListener('dragover', handleShipDragOver);
-			square.addEventListener('dragenter', handleShipDragEnter);
 			square.addEventListener('click', handleSquareClick);
+		});
+	}
+
+	function unregisterSquareListeners() {
+		const playerSquares = document.querySelectorAll(
+			'#player-board .game-board-placeable .game-board-square-placeable'
+		);
+
+		playerSquares.forEach((square) => {
+			square.removeEventListener('drop', handleShipDrop);
+			square.removeEventListener('dragover', handleShipDragOver);
+			square.removeEventListener('click', handleSquareClick);
 		});
 	}
 
@@ -79,11 +90,14 @@ const shipyard = (function () {
 					e.target.parentNode.dataset.x
 				].ship;
 
-			console.log(Player.gameboard.getState());
 			Player.gameboard.removeShip(shipToRemove);
-			console.log(Player.gameboard.getState());
 			renderPlayerState(Player.gameboard.getState());
 			renderShipInShipyard(shipToRemove.getPositions().length);
+			const shipyard = document.querySelector('#shipyard');
+			const startButton = document.querySelector('.start-btn');
+			if (shipyard.children.length != 0 && startButton) {
+				removeStartGameButton();
+			}
 		}
 	}
 
@@ -94,36 +108,31 @@ const shipyard = (function () {
 		const targetXIndex = Number(e.target.dataset.x);
 		const targetYIndex = Number(e.target.dataset.y);
 
-		if (shipElement.classList.contains('horizontal')) {
-			const lengthLeft = grabbedIndex;
-			const ship = createShip({ size: shipLength });
-			try {
+		const ship = createShip({ size: shipLength });
+		try {
+			if (shipElement.classList.contains('horizontal')) {
 				Player.gameboard.placeShip(
 					ship,
 					targetYIndex,
-					targetXIndex - lengthLeft,
+					targetXIndex - grabbedIndex,
 					0
 				);
-				activeShip.parentNode.removeChild(activeShip);
-			} catch (err) {
-				// TODO: display error in UI
-			}
-			renderPlayerState(Player.gameboard.getState());
-		} else {
-			const lengthUp = grabbedIndex;
-			const ship = createShip({ size: shipLength });
-			try {
+			} else {
 				Player.gameboard.placeShip(
 					ship,
-					targetYIndex - lengthUp,
+					targetYIndex - grabbedIndex,
 					targetXIndex,
 					1
 				);
-				activeShip.parentNode.removeChild(activeShip);
-			} catch (err) {
-				// TODO: display error in UI
 			}
-			renderPlayerState(Player.gameboard.getState());
+			activeShip.parentNode.removeChild(activeShip);
+		} catch (err) {
+			// TODO: display error in UI
+		}
+		renderPlayerState(Player.gameboard.getState());
+		const shipyard = document.querySelector('#shipyard');
+		if (shipyard.children.length == 0) {
+			renderStartGameButton();
 		}
 	}
 
@@ -131,8 +140,25 @@ const shipyard = (function () {
 		e.preventDefault();
 	}
 
-	function handleShipDragEnter(e) {
-		e.preventDefault();
+	function renderStartGameButton() {
+		const shipyard = document.querySelector('#shipyard');
+		const startGameButton = document.createElement('button');
+		startGameButton.classList.add('start-btn');
+		startGameButton.textContent = 'Start Game';
+		startGameButton.addEventListener('click', Game.run);
+		startGameButton.addEventListener('click', removeStartGameButton);
+		startGameButton.addEventListener('click', lockShips);
+		shipyard.appendChild(startGameButton);
+	}
+
+	function removeStartGameButton() {
+		const shipyard = document.querySelector('#shipyard');
+		const startButton = shipyard.querySelector('.start-btn');
+		shipyard.removeChild(startButton);
+	}
+
+	function lockShips() {
+		unregisterSquareListeners();
 	}
 
 	return {

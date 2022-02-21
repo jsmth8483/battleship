@@ -21,6 +21,7 @@ const createGameboard = () => {
 				board[yStart][xStart + i].orientation = orientation;
 			}
 			placedShips.push(ship);
+			return true;
 		} else if (orientation === 1) {
 			for (let i = 0; i < ship.getPositions().length; i++) {
 				if (board[yStart + i][xStart].ship)
@@ -32,6 +33,7 @@ const createGameboard = () => {
 				board[yStart + i][xStart].orientation = orientation;
 			}
 			placedShips.push(ship);
+			return true;
 		} else {
 			throw new Error('Invalid Orientation');
 		}
@@ -41,8 +43,6 @@ const createGameboard = () => {
 		board.forEach((arr, yIndex) => {
 			arr.forEach((position, xIndex) => {
 				if (isEqual(position.ship, ship)) {
-					console.log(yIndex, xIndex);
-					console.log(board[yIndex][xIndex]);
 					board[yIndex][xIndex] = shipPlacement();
 				}
 			});

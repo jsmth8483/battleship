@@ -41,6 +41,18 @@ header {
 	}
 }
 
+button {
+	background-color: $navy-blue;
+	color: $white;
+	border: none;
+	padding: 5px;
+}
+
+button:hover {
+	background-color: $yellow;
+	cursor: pointer;
+}
+
 #alerts {
 	margin: 10px;
 	height: 75px;
